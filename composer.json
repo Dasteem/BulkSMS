@@ -5,8 +5,5 @@
             "name": "Shady Keshk",
             "email": "shadywallas@gmail.com"
         }
-    ],
-    "require": {
-    	"guzzlehttp/guzzle": "6.1.1"
-    }
+    ]
 }
