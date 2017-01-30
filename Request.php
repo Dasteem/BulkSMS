@@ -52,7 +52,6 @@ Class Request
      * @author Karim Mostafa <karim.Mostafa@e7gezly.com>
      *
      * @param string $method [POST, 'GET', 'PUT' or 'DELETE']
-     * @param string $uri
      * @param array $params
      * @param string $headers
      * @return array
@@ -62,10 +61,13 @@ Class Request
     public function SendRequest($params, $method = 'POST', $headers = null)
     {
         try {
-            $respone = $this->client_request->request($method, $this->base_uri,
+            $response = $this->client_request->request($method, $this->base_uri,
                 [
-                    'auth' => base64_encode($params['user_name'].':'.$params['password'].':'.$params['account_id']),
-                    'query' => [
+                    'headers' => [
+                        'Authorization'     => 'Basic '.base64_encode($params['user_name'].':'.$params['password'].':'.$params['account_id']),
+                        'Content-Type' => 'application/json'
+                    ],
+                    'json' => [
                         'account_id' => $params['account_id'],
                         'text' => $params['text'],
                         'msisdn' => $params['recipient'],
@@ -73,7 +75,7 @@ Class Request
                     ]
                 ])->getBody()->getContents();
 
-            return $respone;
+            return $response;
 
         } catch (Exception $e) {
             return $e->getMessage();
