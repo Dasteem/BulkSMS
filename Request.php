@@ -64,16 +64,14 @@ Class Request
         try {
             $respone = $this->client_request->request($method, $this->base_uri,
                 [
+                    'auth' => base64_encode($params['user_name'].':'.$params['password'].':'.$params['account_id']),
                     'query' => [
-                        'user_name' => $params['user_name'],
-                        'password' => $params['password'],
-                        'msg' => $params['msg'],
-                        'lang' => $params ['lang'],
-                        'recipient' => $params['recipient'],
+                        'account_id' => $params['account_id'],
+                        'text' => $params['text'],
+                        'msisdn' => $params['recipient'],
                         'sender' => $params['sender']
                     ]
                 ])->getBody()->getContents();
-
 
             return $respone;
 
