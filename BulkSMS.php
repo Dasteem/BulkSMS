@@ -24,6 +24,13 @@ class BulkSMS
      *
      * @var string
      */
+    private $account_id;
+    
+    /**
+     * store username of API to get Auth
+     *
+     * @var string
+     */
     private $username;
 
     /**
@@ -47,19 +54,20 @@ class BulkSMS
      * @author Karim Mostafa <karim.Mostafa@e7gezly.com>
      *
      * @param string $url
-     * @param string $userName
+     * @param string $account_id
+     * @param string $user_name
      * @param string $password
-     * @return
      * @access public
      *
      */
-    public function __construct($userName, $pwd, $url)
+    public function __construct($account_id , $user_name, $password, $url)
     {
 
         $this->request = new Request($url);
         $this->base_url = $url;
-        $this->username = $userName;
-        $this->password = $pwd;
+        $this->account_id = $account_id;
+        $this->username = $user_name;
+        $this->password = $password;
     }
 
 
@@ -68,23 +76,18 @@ class BulkSMS
      * @author Karim Mostafa <karim.Mostafa@e7gezly.com>
      *
      * @param $sms_body
-     * @param $lang
      * @param $mobile
      * @param $sender_name
      * @return array
-     * @internal param string $message
-     * @internal param string $language
-     * @internal param int $recipient like 201200000000
-     * @internal param string $sender like E7gezly
      * @access public
      */
-    public function sendSMS($sms_body, $lang, $mobile, $sender_name)
+    public function sendSMS($sms_body, $mobile, $sender_name)
     {
         $params = array(
+            'account_id' => $this->account_id,
             'user_name' => $this->username,
             'password' => $this->password,
-            'msg' => $sms_body,
-            'lang' => $lang,
+            'text' => $sms_body,
             'recipient' => $mobile,
             'sender' => $sender_name
         );
